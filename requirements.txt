@@ -1,0 +1,12 @@
+ipython>=8.10
+jupyterlab>=3.0
+kedro~=0.19.14
+notebook
+pandas
+scikit-learn
+matplotlib
+seaborn
+autogluon.tabular[all]
+streamlit
+python-dotenv
+azure-storage-blob

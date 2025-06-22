@@ -1,0 +1,15 @@
+# Here you can define all your datasets by using simple YAML syntax.
+#
+# Documentation for this file format can be found in "The Data Catalog"
+# Link: https://docs.kedro.org/en/stable/data/data_catalog.html
+student_depression:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/student_depression_dataset.csv
+  load_args:
+    encoding: utf-8
+
+preprocessed_student_depression:
+  type: pandas.CSVDataset
+  filepath: data/03_primary/preprocessed_student_depression.csv
+  save_args:
+    index: False
