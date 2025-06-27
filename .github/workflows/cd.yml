@@ -19,6 +19,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y git-lfs rsync
           git lfs install
+          git lfs pull
 
       - name: Clone Hugging Face Space repo
         env:
@@ -34,12 +35,12 @@ jobs:
           cd space-repo
           git config user.email "action@github.com"
           git config user.name "GitHub Action"
-
           git lfs install
           git lfs track "*.csv"
           git lfs track "*.zip"
+          git lfs track "*.pkl"
+          git lfs track "*.png"
           git add .gitattributes
-
           git add .
           git commit -m "Automatyczny deploy z GitHub Actions" || echo "Nic się nie zmieniło"
           git push https://kacbar:${HF_TOKEN}@huggingface.co/spaces/kacbar/asi-proj main
