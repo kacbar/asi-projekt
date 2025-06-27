@@ -14,32 +14,32 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install dependencies (git-lfs + HF CLI)
+      - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y git-lfs
+          sudo apt-get install -y git-lfs rsync
           git lfs install
-          pip install huggingface_hub
 
       - name: Clone Hugging Face Space repo
+        env:
+          HF_TOKEN: ${{ secrets.ASITOKEN }}
         run: |
-          git clone https://huggingface.co/spaces/kacbar/asi-proj space-repo
-
-      - name: Copy current project to Space repo
-        run: |
+          git clone https://huggingface.co/spaces/kacbar/student-depression-app space-repo
           rsync -av --exclude=.git --exclude=space-repo ./ space-repo/
 
-      - name: Commit and push to HF Space
+      - name: Deploy to Hugging Face
         env:
           HF_TOKEN: ${{ secrets.ASITOKEN }}
         run: |
           cd space-repo
           git config user.email "action@github.com"
           git config user.name "GitHub Action"
-          git remote set-url origin https://kacbar:${HF_TOKEN}@huggingface.co/spaces/kacbar/asi-proj
 
-          git lfs track "*.csv" "*.zip" "*.pkl" "*.png"
+          git lfs install
+          git lfs track "*.csv"
+          git lfs track "*.zip"
           git add .gitattributes
+
           git add .
-          git commit -m "Deploy student depression Streamlit app to Hugging Face Space" || echo "No changes to commit"
-          git push origin main
+          git commit -m "Automatyczny deploy z GitHub Actions" || echo "Nic się nie zmieniło"
+          git push https://kacbar:${HF_TOKEN}@huggingface.co/spaces/kacbar/student-depression-app main
