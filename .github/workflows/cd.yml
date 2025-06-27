@@ -28,7 +28,7 @@ jobs:
           git clone https://huggingface.co/spaces/kacbar/asi-proj space-repo
           rsync -av --exclude=.git --exclude=space-repo ./ space-repo/
 
-      - name: Deploy to Hugging Face 
+      - name: Deploy to Hugging Face
         env:
           HF_TOKEN: ${{ secrets.ASITOKEN }}
         run: |
