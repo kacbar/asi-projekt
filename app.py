@@ -33,11 +33,11 @@ def download_and_extract_model():
     return TabularPredictor.load(extract_path)
 
 # === Ścieżki ===
-MODEL_PATH = "data/06_models"
+MODEL_PATH = "/data/06_models"
 DATA_PATH = "data/01_raw/student_depression_dataset.csv"
 
 # === Wczytanie modelu i danych ===
-predictor = download_and_extract_model()
+predictor = TabularPredictor.load(MODEL_PATH)
 raw_df = pd.read_csv(DATA_PATH)
 
 # === Unikalne wartości dla dropdownów ===
