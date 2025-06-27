@@ -19,5 +19,7 @@ ENV BLOB_NAME=${BLOB_NAME}
 # Otwieramy port Streamlit
 EXPOSE 8501
 
+COPY data/06_models/predictor.pkl /data/predictor.pkl
+
 # Domyślne polecenie uruchamiające aplikację
 CMD ["python", "-m", "streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
