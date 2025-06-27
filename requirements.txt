@@ -10,3 +10,4 @@ autogluon.tabular[all]
 streamlit
 python-dotenv
 azure-storage-blob
+kedro-datasets

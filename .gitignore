@@ -10,12 +10,7 @@ conf/local/**
 conf/**/*credentials*
 
 # ignore everything in the following folders
-data/**
-
-# except their sub-folders
-!data/**/
-
-# also keep all .gitkeep files
+# but allow .csv, .zip and subfolder structure (for Git LFS)
 !.gitkeep
 
 # ignore kedro-viz metadata
@@ -23,6 +18,7 @@ data/**
 
 # ignore file based logs
 *.log
+
 
 ##########################
 # Common files

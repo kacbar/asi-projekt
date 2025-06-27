@@ -5,21 +5,23 @@ from autogluon.tabular import TabularPredictor
 from azure.storage.blob import BlobServiceClient
 import zipfile
 import os
-from autogluon.tabular import TabularPredictor
-from dotenv import load_dotenv
 
 if not os.path.exists("data/"):
     os.makedirs("data/")
 
 def download_and_extract_model():
-    load_dotenv()
-    blob_connection_string = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
-    container_name = "ml-models"
-    blob_name = "06_models.zip"
-    local_zip_path = "06_models.zip"
     extract_path = "data/06_models"
 
-    blob_service_client = BlobServiceClient.from_connection_string(blob_connection_string)
+    # Jeśli model już istnieje – nie rób nic
+    if os.path.exists(extract_path):
+        return TabularPredictor.load(extract_path)
+    # 🔐 Zhardkodowany klucz (do testów)
+    connection_string = "DefaultEndpointsProtocol=https;AccountName=asii;AccountKey=F50ErEVXgGe8znB/+cHBhgtPUxOEgfsKJucHZuB6eCS8ZaF5sK4rb/8rpcC+gqZtpRjivvKooMYU+ASt8wXf1A==;EndpointSuffix=core.windows.net"
+    container_name = "ml-models"
+    blob_name = "06_models.zip"
+    local_zip_path = "data/06_models.zip"
+
+    blob_service_client = BlobServiceClient.from_connection_string(connection_string)
     blob_client = blob_service_client.get_container_client(container_name).get_blob_client(blob_name)
 
     with open(local_zip_path, "wb") as f:
@@ -28,10 +30,7 @@ def download_and_extract_model():
     with zipfile.ZipFile(local_zip_path, "r") as zip_ref:
         zip_ref.extractall("data/")
 
-    # Wczytaj model z wypakowanego folderu
-    predictor = TabularPredictor.load(extract_path)
-    return predictor
-
+    return TabularPredictor.load(extract_path)
 
 # === Ścieżki ===
 MODEL_PATH = "data/06_models"
