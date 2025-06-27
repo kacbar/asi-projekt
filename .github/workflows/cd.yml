@@ -24,7 +24,7 @@ jobs:
         env:
           HF_TOKEN: ${{ secrets.ASITOKEN }}
         run: |
-          git clone https://huggingface.co/spaces/kacbar/student-depression-app space-repo
+          git clone https://huggingface.co/spaces/kacbar/asi-proj space-repo
           rsync -av --exclude=.git --exclude=space-repo ./ space-repo/
 
       - name: Deploy to Hugging Face
@@ -42,4 +42,4 @@ jobs:
 
           git add .
           git commit -m "Automatyczny deploy z GitHub Actions" || echo "Nic się nie zmieniło"
-          git push https://kacbar:${HF_TOKEN}@huggingface.co/spaces/kacbar/student-depression-app main
+          git push https://kacbar:${HF_TOKEN}@huggingface.co/spaces/kacbar/asi-proj main
